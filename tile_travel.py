@@ -34,40 +34,65 @@ def move_options(x,y):
         
 
 def print_options(n,e,s,w, count):
+    print("You can travel: ",end="")
     if(n and count != 1):
         print("(N)orth", end=" or ")
         count -= 1
-    else:
+    elif (n and count == 1):
         print("(N)orth.")
         return None
 
     if(e and count != 1):
         print("(E)ast", end=" or ")
         count -= 1
-    else:
+    elif (e and count == 1):
         print("(E)ast.")
         return None
 
     if(s and count != 1):
         print("(S)outh", end=" or ")
         count -= 1
-    else:
+    elif (s and count == 1):
         print("(S)outh.")
         return None
 
     if(w and count != 1):
         print("(W)est", end=" or ")
         count -= 1
-    else:
+    elif (w and count == 1):
         print("(W)est.")
         return None
 
 #TODO:
-# Ask for input and save it
-n,e,s,w,count = move_options(X,Y)
-print_options(n,e,s,w,count)
-#TODO:
 # Make a function that moves the player
+def move_player(x, y, move):
+    if move == NORTH:
+        y +=1
+    elif move == SOUTH:
+        y -= 1
+    elif move == WEST:
+        x -= 1
+    elif move == EAST:
+        x += 1
+    return x, y
+
+#TODO:
+# Ask for input and save it
+while True:
+    n,e,s,w,count = move_options(X,Y)
+    print_options(n,e,s,w,count)
+    while True:
+        input_str = input("Direction: ").lower()
+        if((input_str == NORTH and n) or (input_str == EAST and e) or (input_str == SOUTH and s) or (input_str == WEST and w)):
+            break
+        else:
+            print("Not a valid direction!")
+            continue
+    X,Y = move_player(X,Y,input_str)
+    if X == 3 and Y == 1:
+        print("Victory!")
+        break
+
 
 #TODO:
 #Check if the player is in a winning position
